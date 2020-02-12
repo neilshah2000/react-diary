@@ -6,3 +6,7 @@ Content-Type: application/json
     "created": "2020-02-12T16:36:38.563Z", 
     "updated": "2020-02-12T16:36:38.563Z"
 }
+
+###
+
+GET https://calm-citadel-32501.herokuapp.com/api/journal
