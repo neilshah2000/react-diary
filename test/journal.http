@@ -1,0 +1,8 @@
+GET http://localhost:3000/api/journal
+Content-Type: application/json
+
+{
+    "name": "John Barnes",
+    "created": "2020-02-12T16:36:38.563Z", 
+    "updated": "2020-02-12T16:36:38.563Z"
+}
