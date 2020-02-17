@@ -4,7 +4,8 @@ const JournalSchema = new mongoose.Schema({
     name: {
         type: String,
         trim: true,
-        required: 'Name is required'
+        required: 'Name is required',
+        uniqe: true,
     },
     created: {
         type: Date,
