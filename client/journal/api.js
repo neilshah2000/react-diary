@@ -14,8 +14,24 @@ const create = (journal) => {
     })
 }
 
+const listAll = (journal) => {
+    return fetch('/api/journal', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(journal)
+    }).then((response) => {
+        console.log(response);
+        return response.json();
+    }).catch((err) => {
+        console.log(err)
+    })
+}
+
 const listByUser = (params, credentials) => {
-    return fetch('/api/posts/by/'+ params.userId, {
+    return fetch('/api/p'+ params.userId, {
         method: 'GET',
         headers: {
         'Accept': 'application/json',
@@ -123,6 +139,7 @@ export {
     listNewsFeed,
     listByUser,
     create,
+    listAll,
     remove,
     like,
     unlike,

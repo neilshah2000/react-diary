@@ -1,4 +1,5 @@
-import React, {Component} from 'react'
+import React, {useState} from 'react'
+import {Redirect} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -26,18 +27,30 @@ const useStyles = makeStyles({
 
 export default function Home() {
     const classes = useStyles();
+    // const state = {
+    //     toJournal: false,
+    // };
+    const [toJournal, redirectToJournal] = useState(false);
+
+
     function onCreateButtonClicked() {
         const myJournal = new Journal('test');
-        create(myJournal);
+        create(myJournal).then((data) => {
+            console.log('router send');
+            redirectToJournal(true);
+        }, (err) => {});
     }
-    return (
+
+    if (toJournal === true) {
+        return (<Redirect to='/journal' />);
+    } else return (
         <div>
             <Card className={classes.card}>
             <Typography type="headline" component="h2" className=
             {classes.title}>
                 Home Page
             </Typography>
-
+            <div>create journal is {toJournal}</div>
             <CardContent>
                 <Typography type="body1" component="p">
                     Welcome to the Mern Skeleton home page

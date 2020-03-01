@@ -10,3 +10,8 @@ Content-Type: application/json
 ###
 
 GET https://calm-citadel-32501.herokuapp.com/api/journal
+
+
+####
+
+GET http://localhost:3000/api/journal
