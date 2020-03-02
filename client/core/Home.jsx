@@ -1,9 +1,7 @@
 import React, {useState} from 'react'
 import {Redirect} from 'react-router-dom'
-import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -53,7 +51,7 @@ export default function Home() {
             <div>create journal is {toJournal}</div>
             <CardContent>
                 <Typography type="body1" component="p">
-                    Welcome to the Mern Skeleton home page
+                    Welcome to the diary app
                 </Typography>
                 <Button variant="contained" color="primary" onClick={onCreateButtonClicked}>Create Journal</Button>
             </CardContent>

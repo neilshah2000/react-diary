@@ -30,6 +30,21 @@ const listAll = (journal) => {
     })
 }
 
+const getJournal = (journalId) => {
+    return fetch('/api/journal/' + journalId, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        }
+    }).then((response) => {
+        console.log(response);
+        return response.json();
+    }).catch((err) => {
+        console.log(err)
+    })
+}
+
 const listByUser = (params, credentials) => {
     return fetch('/api/p'+ params.userId, {
         method: 'GET',
@@ -139,6 +154,7 @@ export {
     listNewsFeed,
     listByUser,
     create,
+    getJournal,
     listAll,
     remove,
     like,

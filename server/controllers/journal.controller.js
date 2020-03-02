@@ -72,7 +72,7 @@ const journalByID = (req, res, next, id) => {
                 error: "User not found"
             });
         }
-        req.journal = user;
+        req.journal = journal;
         next();
     });
 };
