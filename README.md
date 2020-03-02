@@ -1,2 +1,2 @@
-## Build
+## Developmemt
 ```npm run development```
