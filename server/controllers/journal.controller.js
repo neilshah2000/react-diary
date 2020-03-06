@@ -37,9 +37,9 @@ const read = (req, res) => {
 // type object from DB
 const update = (req, res, next) => {
     let originalJournal = req.journal;
-    newJournal = _.extend(originalJournal, req.body);
+    let newJournal = _.extend(originalJournal, req.body);
     newJournal.updated = Date.now();
-    newJournal.save((err) => {
+    newJournal.save((err, journal) => {
         if (err) {
             return res.status(400).json({
                 error: errorHandler.getErrorMessage(err)

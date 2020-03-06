@@ -39,7 +39,7 @@ export default function Home() {
         }, (err) => {});
     }
 
-    if (toJournal === true) {
+    if (toJournal) {
         return (<Redirect to='/journal' />);
     } else return (
         <div>

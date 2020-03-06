@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import JournalEntry from './journalEntry';
 
 const JournalSchema = new mongoose.Schema({
     name: {
@@ -12,6 +13,9 @@ const JournalSchema = new mongoose.Schema({
         default: Date.now
     },
     updated: Date,
+    journalEntries: {
+        type: [JournalEntry.schema]
+    }
 });
 
 export default mongoose.model('Journal', JournalSchema);

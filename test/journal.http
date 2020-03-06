@@ -15,3 +15,20 @@ GET https://calm-citadel-32501.herokuapp.com/api/journal
 ####
 
 GET http://localhost:3000/api/journal
+
+###
+
+PUT http://localhost:3000/api/journal/5e4428cee8fa3444a8fcdd93
+Content-Type: application/json
+
+{
+    "_id": "5e4428cee8fa3444a8fcdd93",
+    "name": "ALBE0510",
+    "created": "2020-02-12T16:33:18.963Z",
+    "journalEntries": [
+        {
+            "date": "2020-02-12T16:33:18.963Z",
+            "entry": "test string"
+        }
+    ]
+}

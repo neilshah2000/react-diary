@@ -1,18 +1,22 @@
 import React, {useEffect, useState} from 'react'
-import {useParams} from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { getJournal } from './../journal/api';
 
 export default function Journal2() {
     let { journalId } = useParams();
-    const [journal, journalLoaded] = useState(null)
+    const [journalData, setJournalData] = useState(null)
 
     useEffect(() => {
         getJournal(journalId).then((data) => {
-            journalLoaded(data)
+            setJournalData(data);
+            console.log(data);
         }, console.error);
     }, [journalId]);
 
-    return (
+
+    if (journalData) {
+    return (<div></div>);
+    } else return (
         <div>
             journal page
         </div>
