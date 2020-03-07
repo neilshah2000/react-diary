@@ -45,6 +45,22 @@ const getJournal = (journalId) => {
     })
 }
 
+const updateJournal = ( journal ) => {
+    return fetch('/api/journal/' + journal._id, {
+        method: 'PUT',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(journal)
+    }).then(( response ) => {
+        console.log(response);
+        return response.json();
+    }).catch(( err ) => {
+        console.log(err);
+    });
+};
+
 const listByUser = (params, credentials) => {
     return fetch('/api/p'+ params.userId, {
         method: 'GET',
@@ -156,6 +172,7 @@ export {
     create,
     getJournal,
     listAll,
+    updateJournal,
     remove,
     like,
     unlike,

@@ -45,7 +45,7 @@ app.listen(port, function onStart(err) {
 });
 
 // Database Connection URL
-const url = process.env.MONGODB_URI || 'mongodb+srv://admin:admin@cluster0-pyxgh.mongodb.net/test?retryWrites=true&w=majority';
+const url = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/test?retryWrites=true&w=majority';
 // Use connect method to connect to the server
 // MongoClient.connect(url, (err, db)=>{
 //     console.log("Connected successfully to mongodb server");

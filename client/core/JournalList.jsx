@@ -17,7 +17,7 @@ export default function JournalList() {
             <ul>
                 {journals.map((journal) => <li key={journal._id}>{journal.name}</li>)}
             </ul>
-            <Link to="/journal/5e4429fbe8fa3444a8fcdd94">journal</Link>
+            <Link to="/journal/5e638d62c313f303d568cd21">journal</Link>
         </div>
     )
 }
