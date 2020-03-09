@@ -23,7 +23,9 @@ export default function Journal2() {
         console.log('save entry: ' + entry);
         const myEntry = new JournalEntry(entry);
         journalData.journalEntries.push(myEntry);
-        updateJournal(journalData).then(console.log);
+        updateJournal(journalData).then((data) => {
+            setJournalData(data);
+        }, console.error);
     };
 
     if (journalData) {
