@@ -30,7 +30,8 @@ devBundle.compile(app);
 const CURRENT_WORKING_DIR = process.cwd();
 app.use('/dist', express.static(path.join(CURRENT_WORKING_DIR, 'dist')));
 
-app.get('/', (req, res) => {
+// let all routing be handled by client side
+app.get('*', (req, res) => {
     res.status(200).send(template());
 });
 

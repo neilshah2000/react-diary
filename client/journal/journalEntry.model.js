@@ -1,9 +1,12 @@
-export class JournalEntry {
-    date;
-    entry;
+export function JournalEntry() {
+    this._id = ''
+    this.date = new Date();
+    this.entry = '';
 
-    constructor(entry) {
-        this.date = new Date();
-        this.entry = entry;
-    }
+    this.parse = function(journalEntryJson){
+        this._id = journalEntryJson._id;
+        this.date = journalEntryJson.date;
+        this.entry = journalEntryJson.entry;
+        return this;
+    };
 }

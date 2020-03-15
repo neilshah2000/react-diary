@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { create } from './../journal/api';
-import { Journal } from './../journal/journal-model';
+import { Journal } from './../journal/journal.model';
 
 const useStyles = makeStyles({
     card: {
@@ -32,7 +32,8 @@ export default function Home() {
 
 
     function onCreateButtonClicked() {
-        const myJournal = new Journal('test');
+        const myJournal = new Journal();
+        myJournal.name = 'test';
         create(myJournal).then((data) => {
             console.log('router send');
             redirectToJournal(true);

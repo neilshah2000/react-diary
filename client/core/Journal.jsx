@@ -2,15 +2,19 @@ import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
 import { getJournal, updateJournal } from './../journal/api';
 import { JournalEntry } from './../journal/journalEntry.model';
+import { Journal } from './../journal/journal.model';
 
 export default function Journal2() {
     let { journalId } = useParams();
     const [journalData, setJournalData] = useState(null);
-    const [entry, setEntry] = useState('init');
+    const [entry, setEntry] = useState('');
 
     useEffect(() => {
         getJournal(journalId).then((data) => {
-            setJournalData(data);
+            const myJournal = new Journal().parse(data);
+            setJournalData(myJournal);
+            const myEntry = myJournal.getLatestEntry();
+            setEntry(myEntry);
             console.log(data);
         }, console.error);
     }, [journalId]);
@@ -21,27 +25,21 @@ export default function Journal2() {
 
     const handleBlur = () => {
         console.log('save entry: ' + entry);
-        const myEntry = new JournalEntry(entry);
-        journalData.journalEntries.push(myEntry);
+        journalData.journalEntries.push(entry);
         updateJournal(journalData).then((data) => {
             setJournalData(data);
         }, console.error);
     };
 
-    if (journalData) {
-        return (
-            <div>
-                <div>journal data loaded</div>
-                <textarea
-                    value={entry || ''}
-                    onChange={handleEntry}
-                    onBlur={handleBlur}>
-                </textarea>
-            </div>
-        );
-    } else return (
+    return (
         <div>
-            journal page
+            <div>journal data loaded</div>
+            <textarea
+                value={entry.entry}
+                onChange={handleEntry}
+                onBlur={handleBlur}>
+            </textarea>
         </div>
-    )
+    );
+
 }
