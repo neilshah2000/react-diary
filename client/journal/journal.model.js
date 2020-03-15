@@ -27,4 +27,24 @@ export function Journal() {
             return new JournalEntry();
         }
     };
+
+    // returns either the existing journal on that date
+    // or a new journal
+    this.getEntry = function(myDate) {
+        const existingJournal = this.journalEntries.find(je => {
+            return sameDay(je.date, myDate);
+        });
+        if (typeof existingJournal !== 'undefined') {
+            return existingJournal;
+        } else {
+            return new JournalEntry();
+        }
+    };
+
+
+    function sameDay(d1, d2) {
+        return d1.getFullYear() === d2.getFullYear() &&
+            d1.getMonth() === d2.getMonth() &&
+            d1.getDate() === d2.getDate();
+    }
 }

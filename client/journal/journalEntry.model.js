@@ -5,7 +5,7 @@ export function JournalEntry() {
 
     this.parse = function(journalEntryJson){
         this._id = journalEntryJson._id;
-        this.date = journalEntryJson.date;
+        this.date = new Date(journalEntryJson.date);
         this.entry = journalEntryJson.entry;
         return this;
     };
