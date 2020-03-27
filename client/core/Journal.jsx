@@ -1,11 +1,39 @@
 import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
 import { getJournal, updateJournal } from './../journal/api';
-import { JournalEntry } from './../journal/journalEntry.model';
 import { Journal } from './../journal/journal.model';
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import { TextareaAutosize } from '@material-ui/core';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import LeftIcon from '@material-ui/icons/KeyboardArrowLeft';
+import HomeIcon from '@material-ui/icons/Home';
+import RightIcon from '@material-ui/icons/KeyboardArrowRight';
 
+const useStyles = makeStyles({
+    date: {
+        fontSize: '80pt',
+    },
+    subtitle: {
+
+    },
+    journalTextArea: {
+        width: '600pt',
+    },
+    container: {
+        textAlign: 'center',
+    },
+    footer: {
+        position: 'fixed',
+        bottom: '0pt',
+        width: '100%'
+    }
+});
 
 export default function Journal2() {
+    const classes = useStyles();
     let { journalId } = useParams();
     const [journalData, setJournalData] = useState(null);
     const [entry, setEntry] = useState('');
@@ -37,16 +65,18 @@ export default function Journal2() {
     };
 
     const incDateClicked = () => {
-        const newDate = new Date();
+        const newDate = new Date(journalDate);
         newDate.setDate(journalDate.getDate() + 1);
         setJournalDate(newDate);
+        console.log(newDate);
         setEntry(journalData.getEntry(newDate));
     }
 
     const decDateClicked = () => {
-        const newDate = new Date();
+        const newDate = new Date(journalDate);
         newDate.setDate(journalDate.getDate() - 1);
         setJournalDate(newDate);
+        console.log(newDate);
         setEntry(journalData.getEntry(newDate));
     }
 
@@ -55,19 +85,38 @@ export default function Journal2() {
         setEntry(journalData.getEntry(new Date()));
     }
 
+    const formatJournalDate = (date) => {
+        const day = date.getDate();
+        const month = date.toLocaleString('default', { month: 'short' });
+        return day + ' ' + month;
+    };
+
+    const onDateNavigationClicked = (event, newValue) => {
+        if(newValue === 'Dec') decDateClicked();
+        if(newValue === 'Home') homeDateClicked();
+        if(newValue === 'Inc') incDateClicked();
+    };
+
     return (
-        <div>
-            <div>journal data loaded</div>
-            <div>{journalDate.toString()}</div>
-            <textarea
-                value={entry.entry}
-                onChange={handleEntry}
-                onBlur={handleBlur}>
-            </textarea>
-            <button onClick={decDateClicked}>Dec</button>
-            <button onClick={homeDateClicked}>Home</button>
-            <button onClick={incDateClicked}>Inc</button>
-        </div>
+        <React.Fragment>
+            <Container className={classes.container}>
+                <Typography type="headline" component="h1" className={classes.date}>
+                    {formatJournalDate(journalDate)}
+                </Typography>
+                <TextareaAutosize
+                    rowsMin={20}
+                    className={classes.journalTextArea}
+                    value={entry.entry}
+                    onChange={handleEntry}
+                    onBlur={handleBlur}>
+                </TextareaAutosize>
+            </Container>
+            <BottomNavigation className={classes.footer} onChange={onDateNavigationClicked}>
+                <BottomNavigationAction label="Dec" value="Dec" icon={<LeftIcon/>} />
+                <BottomNavigationAction label="Home" value="Home" icon={<HomeIcon/>} />
+                <BottomNavigationAction label="Inc" value="Inc" icon={<RightIcon/>} />
+            </BottomNavigation>
+        </React.Fragment>
     );
 
 }
