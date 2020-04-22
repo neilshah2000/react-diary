@@ -1,10 +1,31 @@
 import React, {useEffect, useState} from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import { listAll } from './../journal/api';
-import { Link, BrowserRouter as Router, Switch  } from 'react-router-dom';
-import { createBrowserHistory } from "history";
+import { Link } from 'react-router-dom';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import TodayIcon from '@material-ui/icons/Today';
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        width: '100%',
+        backgroundColor: theme.palette.background.paper,
+    },
+    container: {
+        textAlign: 'center',
+    },
+    title: {
+        fontSize: '40pt',
+    },
+}));
 
 export default function JournalList() {
     const [journals, newJournals] = useState([]);
+    const classes = useStyles();
 
     useEffect(() => {
         listAll().then((data) => {
@@ -12,21 +33,35 @@ export default function JournalList() {
         }, console.error);
     }, []);
 
-    function getJournalUrlString(journalId) {
-        return "/journal/" + journalId;
+    function ListItemLink(props) {
+        return <ListItem button component="a" {...props} />;
+    }
+
+    function JournalList(props) {
+        return props.myJournals.map((journal) => {
+            return (
+                <ListItemLink href={"/journal/"+journal._id}>
+                    <ListItemIcon>
+                        <TodayIcon/>
+                    </ListItemIcon>    
+                    <ListItemText primary={journal._id} secondary={journal.updated}/>
+                </ListItemLink>
+            )
+        })
     }
 
     return (
-        <div>
-            <h4>new journal list page</h4>
-            <ul>
-                {journals.map((journal) => {
-                    return (
-                        <li key={journal._id}><Link to={"/journal/"+journal._id}>{journal.name}</Link></li>
-                    )
-                })}
-            </ul>
-            <Link to="/journal/5e638d62c313f303d568cd21">journal</Link>
-        </div>
+        <React.Fragment>
+            <Container className={classes.container}>
+                <Typography type="headline" component="h1" className={classes.title}>
+                    Current Journal List
+                </Typography>
+                <div className={classes.root}>
+                    <List component="nav" aria-label="main mailbox folders">
+                        <JournalList myJournals={journals}></JournalList>
+                    </List>
+                </div>
+            </Container>
+        </React.Fragment>
     )
 }

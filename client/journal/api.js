@@ -1,4 +1,5 @@
 const create = (journal) => {
+    delete journal._id;
     return fetch('/api/journal', {
         method: 'POST',
         headers: {
