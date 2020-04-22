@@ -1,7 +1,11 @@
 import express from 'express';
 import journalCtrl from '../controllers/journal.controller';
+import promptCtrl from '../controllers/prompt.controller';
 
 const router = express.Router();
+
+router.route('/prompt')
+  .get(promptCtrl.list)
 
 router.route('test').get((req, res) => {
     return res.json({test: 'test'});
