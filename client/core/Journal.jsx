@@ -14,10 +14,10 @@ import RightIcon from '@material-ui/icons/KeyboardArrowRight';
 
 const useStyles = makeStyles({
     date: {
-        fontSize: '80pt',
+        fontSize: '40pt',
     },
-    subtitle: {
-
+    journalName: {
+        fontSize: '80pt',
     },
     journalTextArea: {
         width: '600pt',
@@ -100,6 +100,9 @@ export default function Journal2() {
     return (
         <React.Fragment>
             <Container className={classes.container}>
+                <Typography type="headline" component="h1" className={classes.journalName}>
+                    {journalData? journalData.name : null}
+                </Typography>
                 <Typography type="headline" component="h1" className={classes.date}>
                     {formatJournalDate(journalDate)}
                 </Typography>
