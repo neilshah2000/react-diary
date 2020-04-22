@@ -34,17 +34,17 @@ export default function JournalList() {
     }, []);
 
     function ListItemLink(props) {
-        return <ListItem button component="a" {...props} />;
+        return <ListItem key={props.id} button component="a" {...props} />;
     }
 
     function JournalList(props) {
         return props.myJournals.map((journal) => {
             return (
-                <ListItemLink href={"/journal/"+journal._id}>
+                <ListItemLink id={journal._id} href={"/journal/"+journal._id}>
                     <ListItemIcon>
                         <TodayIcon/>
                     </ListItemIcon>    
-                    <ListItemText primary={journal._id} secondary={journal.updated}/>
+                    <ListItemText primary={journal.name} secondary={journal._id}/>
                 </ListItemLink>
             )
         })
