@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
-import { getJournal, updateJournal } from './../journal/api';
+import { getJournal, updateJournal, getPrompts } from './../journal/api';
 import { Journal } from './../journal/journal.model';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
@@ -18,6 +18,9 @@ const useStyles = makeStyles({
     },
     journalName: {
         fontSize: '80pt',
+    },
+    prompt: {
+        fontSize: '20pt',
     },
     journalTextArea: {
         width: '600pt',
@@ -38,6 +41,8 @@ export default function Journal2() {
     const [journalData, setJournalData] = useState(null);
     const [entry, setEntry] = useState('');
     const [journalDate, setJournalDate] = useState(new Date());
+    // const [prompts, setPrompts] = useState([]);
+    const [randomPrompt, setRandomPrompt] = useState('');
 
     useEffect(() => {
         getJournal(journalId).then((data) => {
@@ -48,6 +53,19 @@ export default function Journal2() {
             console.log(data);
         }, console.error);
     }, [journalId]);
+
+    useEffect(() => {
+        getPrompts().then((data) => {
+            console.log(data);
+            // setPrompts(data);
+            chooseRandomPrompt(data);
+        }, console.error);
+    }, []);
+
+    const chooseRandomPrompt = (prompts) => {
+        const rand = prompts[Math.floor(Math.random() * prompts.length)];
+        setRandomPrompt(rand);
+    };
 
     const handleEntry = (evt) => {
         setEntry(evt.target.value);
@@ -106,6 +124,10 @@ export default function Journal2() {
                 <Typography type="headline" component="h1" className={classes.date}>
                     {formatJournalDate(journalDate)}
                 </Typography>
+                {randomPrompt &&
+                    <Typography type="headline" component="h1" className={classes.prompt}>
+                        {randomPrompt.text}
+                    </Typography>}
                 <TextareaAutosize
                     rowsMin={20}
                     className={classes.journalTextArea}
