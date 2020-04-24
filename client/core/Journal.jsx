@@ -41,7 +41,7 @@ export default function Journal2() {
     const [journalData, setJournalData] = useState(null);
     const [entry, setEntry] = useState('');
     const [journalDate, setJournalDate] = useState(new Date());
-    // const [prompts, setPrompts] = useState([]);
+    const [prompts, setPrompts] = useState([]);
     const [randomPrompt, setRandomPrompt] = useState('');
 
     useEffect(() => {
@@ -57,12 +57,15 @@ export default function Journal2() {
     useEffect(() => {
         getPrompts().then((data) => {
             console.log(data);
-            // setPrompts(data);
-            chooseRandomPrompt(data);
+            setPrompts(data);
         }, console.error);
     }, []);
 
-    const chooseRandomPrompt = (prompts) => {
+    useEffect(() => {
+        chooseRandomPrompt();
+    }, [prompts]);
+
+    const chooseRandomPrompt = () => {
         const rand = prompts[Math.floor(Math.random() * prompts.length)];
         setRandomPrompt(rand);
     };
@@ -78,7 +81,8 @@ export default function Journal2() {
             entry: entry
         });
         updateJournal(journalData).then((data) => {
-            setJournalData(data);
+            const myJournal = new Journal().parse(data);
+            setJournalData(myJournal);
         }, console.error);
     };
 
@@ -88,6 +92,7 @@ export default function Journal2() {
         setJournalDate(newDate);
         console.log(newDate);
         setEntry(journalData.getEntry(newDate));
+        chooseRandomPrompt();
     }
 
     const decDateClicked = () => {
@@ -96,11 +101,13 @@ export default function Journal2() {
         setJournalDate(newDate);
         console.log(newDate);
         setEntry(journalData.getEntry(newDate));
+        chooseRandomPrompt();
     }
 
     const homeDateClicked = () => {
         setJournalDate(new Date());
         setEntry(journalData.getEntry(new Date()));
+        chooseRandomPrompt();
     }
 
     const formatJournalDate = (date) => {

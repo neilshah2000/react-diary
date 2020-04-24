@@ -40,7 +40,7 @@ export default function JournalList() {
     function JournalList(props) {
         return props.myJournals.map((journal) => {
             return (
-                <ListItemLink id={journal._id} href={"/journal/"+journal._id}>
+                <ListItemLink id={journal._id} key={journal._id} href={"/journal/"+journal._id}>
                     <ListItemIcon>
                         <TodayIcon/>
                     </ListItemIcon>    
