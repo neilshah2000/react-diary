@@ -11,6 +11,12 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import LeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import HomeIcon from '@material-ui/icons/Home';
 import RightIcon from '@material-ui/icons/KeyboardArrowRight';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles({
     date: {
@@ -38,11 +44,12 @@ const useStyles = makeStyles({
 export default function Journal2() {
     const classes = useStyles();
     let { journalId } = useParams();
-    const [journalData, setJournalData] = useState(null);
+    const [journalData, setJournalData] = useState(null); // current journal object
     const [entry, setEntry] = useState('');
     const [journalDate, setJournalDate] = useState(new Date());
     const [prompts, setPrompts] = useState([]);
     const [randomPrompt, setRandomPrompt] = useState('');
+    const [open, setOpen] = useState(false);
 
     useEffect(() => {
         getJournal(journalId).then((data) => {
@@ -76,14 +83,22 @@ export default function Journal2() {
 
     const handleBlur = () => {
         console.log('save entry: ' + entry);
-        journalData.journalEntries.push({
+        journalData.setEntry({
             date: journalDate,
             entry: entry
         });
         updateJournal(journalData).then((data) => {
             const myJournal = new Journal().parse(data);
             setJournalData(myJournal);
+            setOpen(true);
         }, console.error);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setOpen(false);
     };
 
     const incDateClicked = () => {
@@ -131,14 +146,11 @@ export default function Journal2() {
                 <Typography type="headline" component="h1" className={classes.date}>
                     {formatJournalDate(journalDate)}
                 </Typography>
-                {randomPrompt &&
-                    <Typography type="headline" component="h1" className={classes.prompt}>
-                        {randomPrompt.text}
-                    </Typography>}
                 <TextareaAutosize
                     rowsMin={20}
                     className={classes.journalTextArea}
                     value={entry.entry}
+                    placeholder={randomPrompt ? randomPrompt.text : ''}
                     onChange={handleEntry}
                     onBlur={handleBlur}>
                 </TextareaAutosize>
@@ -148,6 +160,12 @@ export default function Journal2() {
                 <BottomNavigationAction label="Home" value="Home" icon={<HomeIcon/>} />
                 <BottomNavigationAction label="Inc" value="Inc" icon={<RightIcon/>} />
             </BottomNavigation>
+
+            <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success">
+                    Journal saved
+                </Alert>
+            </Snackbar>
         </React.Fragment>
     );
 

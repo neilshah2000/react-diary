@@ -13,11 +13,27 @@ export function Journal() {
         this.name = journalJson.name;
         this.created = journalJson.created;
         this.updated = journalJson.updated;
-        journalJson.journalEntries.forEach(je => {
-            this.journalEntries.push(new JournalEntry().parse(je));
-        });
+        if (Array.isArray(journalJson.journalEntries)) {
+            journalJson.journalEntries.forEach(je => {
+                this.journalEntries.push(new JournalEntry().parse(je));
+            });
+        }
+        
         return this;
     };
+
+    // if there is already a journal entry on that day,
+    // will replace it. Otherwise add it
+    this.setEntry = function(newJournalEntry){
+        const oldEntry = this.journalEntries.find((je) => {
+            return sameDay(je.date, newJournalEntry.date);
+        });
+        if (typeof oldEntry === 'undefined') {
+            this.journalEntries.push(newJournalEntry);
+        } else {
+            oldEntry.entry = newJournalEntry.entry;
+        }
+    }
 
     // returns either the latest journla entry or new one
     this.getLatestEntry = function() {
