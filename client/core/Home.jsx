@@ -27,7 +27,7 @@ const useStyles = makeStyles({
 export default function Home() {
     const classes = useStyles();
     const [toJournal, redirectToJournal] = useState(false);
-    const [journalName, setJournalName] = useState('');
+    const [journalName, setJournalName] = useState('Guest Journal');
     const [newJournal, setNewJournal] = useState(null);
 
     async function onCreateButtonClicked() {
