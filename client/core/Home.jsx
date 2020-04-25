@@ -11,7 +11,7 @@ import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles({
     title: {
-        fontSize: '80pt',
+        fontSize: '40pt',
     },
     subtitle: {
 

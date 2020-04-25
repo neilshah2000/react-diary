@@ -20,13 +20,10 @@ function Alert(props) {
 
 const useStyles = makeStyles({
     date: {
-        fontSize: '40pt',
+        fontSize: '20pt',
     },
     journalName: {
-        fontSize: '80pt',
-    },
-    prompt: {
-        fontSize: '20pt',
+        fontSize: '40pt',
     },
     journalTextArea: {
         width: '600pt',
