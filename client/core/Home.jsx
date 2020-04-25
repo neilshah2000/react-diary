@@ -28,12 +28,14 @@ export default function Home() {
     const classes = useStyles();
     const [toJournal, redirectToJournal] = useState(false);
     const [journalName, setJournalName] = useState('');
+    const [newJournal, setNewJournal] = useState(null);
 
     async function onCreateButtonClicked() {
         const myJournal = new Journal();
         myJournal.name = journalName;
         try {
             const data = await create(myJournal);
+            setNewJournal(data);
             console.log('router send');
             redirectToJournal(true);
         } catch (err){
@@ -46,7 +48,7 @@ export default function Home() {
     }
 
     if (toJournal) {
-        return (<Redirect to='/journal' />);
+        return (<Redirect to={"/journal/"+newJournal._id} />);
     } else return (
         <React.Fragment>
             <Container className={classes.container}>
