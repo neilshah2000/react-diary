@@ -47,11 +47,6 @@ app.listen(port, function onStart(err) {
 
 // Database Connection URL
 const url = process.env.MONGODB_URI || 'mongodb://root:example@34.204.87.229:27017/?authSource=admin';
-// Use connect method to connect to the server
-// MongoClient.connect(url, (err, db)=>{
-//     console.log("Connected successfully to mongodb server");
-//     db.close();
-// });
 
 mongoose.connect(url);
 mongoose.connection.on('error', () => {
