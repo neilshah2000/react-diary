@@ -29,13 +29,16 @@ export default function Home() {
     const [toJournal, redirectToJournal] = useState(false);
     const [journalName, setJournalName] = useState('');
 
-    function onCreateButtonClicked() {
+    async function onCreateButtonClicked() {
         const myJournal = new Journal();
         myJournal.name = journalName;
-        create(myJournal).then((data) => {
+        try {
+            const data = await create(myJournal);
             console.log('router send');
             redirectToJournal(true);
-        }, (err) => {});
+        } catch (err){
+            console.error(err);
+        }
     }
 
     function onInputChange(event) {

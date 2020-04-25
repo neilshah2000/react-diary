@@ -49,20 +49,30 @@ export default function Journal2() {
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
-        getJournal(journalId).then((data) => {
-            const myJournal = new Journal().parse(data);
-            setJournalData(myJournal);
-            const myEntry = myJournal.getEntry(new Date());
-            setEntry(myEntry);
-            console.log(data);
-        }, console.error);
+        (async function() {
+            try {
+                const data = await getJournal(journalId);
+                const myJournal = new Journal().parse(data);
+                setJournalData(myJournal);
+                const myEntry = myJournal.getEntry(new Date());
+                setEntry(myEntry);
+                console.log(data);
+            } catch (err){
+                console.error(err);
+            }
+        })();
     }, [journalId]);
 
     useEffect(() => {
-        getPrompts().then((data) => {
-            console.log(data);
-            setPrompts(data);
-        }, console.error);
+        (async function() {
+            try {
+                const data = await getPrompts();
+                console.log(data);
+                setPrompts(data);
+            } catch (err){
+                console.error(err);
+            }
+        })();
     }, []);
 
     useEffect(() => {

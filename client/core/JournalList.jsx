@@ -28,9 +28,14 @@ export default function JournalList() {
     const classes = useStyles();
 
     useEffect(() => {
-        listAll().then((data) => {
-            newJournals(data)
-        }, console.error);
+        (async function() {
+            try {
+                const data = await listAll();
+                newJournals(data)
+            } catch (err){
+                console.error(err);
+            }
+        })();
     }, []);
 
     function ListItemLink(props) {
