@@ -42,7 +42,7 @@
     "cors": "^2.8.5",
     "express": "4.16.3",
     "helmet": "^3.21.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "mongodb": "3.0.7",
     "mongoose": "^5.8.11",
     "nodemon": "1.17.3",
