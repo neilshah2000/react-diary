@@ -43,7 +43,7 @@
     "express": "4.16.3",
     "helmet": "^3.21.2",
     "lodash": "^4.17.15",
-    "mongodb": "3.0.7",
+    "mongodb": "3.1.13",
     "mongoose": "^5.8.11",
     "nodemon": "1.17.3",
     "react": "^16.12.0",
